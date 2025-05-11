@@ -1,0 +1,153 @@
+.container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 2rem;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f4f4f4;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.menu-button:hover {
+  transform: scale(1.05);
+}
+
+.menu-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.menu-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.clear-storage-button {
+  margin-top: 1rem;
+  background-color: #888;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clear-storage-button:hover {
+  background-color: #555;
+}
+
+.menu-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background-color: #2563eb;
+}
+
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.remove-button {
+  background: none;
+  color: #ef4444;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.remove-button:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  color: #6b7280;
+}
+
+.totals {
+  margin-top: 1.5rem;
+}
+
+.total {
+  font-weight: bold;
+}
+
+.clear-button {
+  margin-top: 1rem;
+  background-color: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  background-color: #dc2626;
+}
+
+.size-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.size-button {
+  background-color: #10b981;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.size-button:hover {
+  background-color: #059669;
+}
