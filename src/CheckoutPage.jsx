@@ -29,7 +29,7 @@ export default function SummaryPage() {
           </li>
         ))}
       </ul>
-      <button
+      {/* <button
   onClick={() => {
     localStorage.removeItem('allCafeOrders');
     alert('All saved orders have been cleared.');
@@ -37,7 +37,7 @@ export default function SummaryPage() {
   className="checkout-button"
 >
   Clear Saved Orders
-</button>
+</button> */}
     </div>
   );
 }

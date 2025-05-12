@@ -84,6 +84,7 @@ export default function CafeBilling() {
   
     const prevOrders = JSON.parse(localStorage.getItem('allCafeOrders')) || [];
     localStorage.setItem('allCafeOrders', JSON.stringify([...prevOrders, newOrder]));
+      alert('Item has been checkedout')
   
     clearOrder(); // clear the form
     // alert('Order saved!');
