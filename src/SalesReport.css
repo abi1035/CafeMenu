@@ -5,6 +5,10 @@
   font-family: sans-serif;
 }
 
+body {
+     font-family: "Merriweather", serif;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

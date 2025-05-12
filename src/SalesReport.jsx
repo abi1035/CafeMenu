@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 // Map base item names to image paths
 const itemImages = {
-  'Coffee': '/CoffeeCup.jpg',
-  'Tea': '/Tea.jpg',
-  'Muffin': '/Muffin.jpg',
-  'Cookie': '/Cookie.jpg',
-  'Blue Tart': '/Muffin.jpg',
-  'Pie': '/PumpkinPie.jpg'
+  'Coffee': '/CoffeeCup.png',
+  'Tea': '/Tea.png',
+  'Muffin': '/Muffin.png',
+  'Cookie': '/Cookie.png',
+  'Blue Tart': '/BlueBerry.png',
+  'Pie': '/PumpkinPie.png'
 };
 
 export default function SalesReport() {
@@ -50,34 +50,38 @@ export default function SalesReport() {
       {itemData.length === 0 ? (
         <p>No orders found.</p>
       ) : (
-      <table>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
   <thead>
     <tr>
-      <th></th> {/* empty header for image */}
-      <th>Item</th>
-      <th>Units Sold</th>
-      <th>Total Revenue</th>
+      <th style={{ width: '60px' }}></th> {/* image column */}
+      <th style={{ textAlign: 'left', padding: '8px' }}>Item</th>
+      <th style={{ textAlign: 'center', padding: '8px' }}>Units Sold</th>
+      <th style={{ textAlign: 'right', padding: '8px' }}>Total Revenue</th>
     </tr>
   </thead>
   <tbody>
     {itemData.map((item) => (
-      <tr key={item.name}>
-        <td>
+      <tr key={item.name} style={{ borderBottom: '1px solid #ddd' }}>
+        <td style={{ padding: '8px' }}>
           {item.image && (
-            <img src={item.image} alt={item.name} style={{ width: '50px', borderRadius: '8px' }} />
+            <img
+              src={item.image}
+              alt={item.name}
+              style={{ width: '50px', height: '50px', borderRadius: '8px', objectFit: 'cover' }}
+            />
           )}
         </td>
-        <td>{item.name}</td>
-        <td style={{display:'flex', justifyContent:'center', alignItems:'center' }}>{item.quantity}</td>
-        <td>${item.revenue.toFixed(2)}</td>
+        <td style={{ padding: '8px' }}>{item.name}</td>
+        <td style={{ padding: '8px', textAlign: 'center' }}>{item.quantity}</td>
+        <td style={{ padding: '8px', textAlign: 'right' }}>${item.revenue.toFixed(2)}</td>
       </tr>
     ))}
   </tbody>
   <tfoot>
     <tr>
       <td></td>
-      <td colSpan="2"><strong>Total Revenue</strong></td>
-      <td><strong>${totalRevenue.toFixed(2)}</strong></td>
+      <td colSpan="2" style={{ textAlign: 'right', padding: '8px', fontWeight: 'bold' }}>Total Revenue</td>
+      <td style={{ textAlign: 'right', padding: '8px', fontWeight: 'bold' }}>${totalRevenue.toFixed(2)}</td>
     </tr>
   </tfoot>
 </table>

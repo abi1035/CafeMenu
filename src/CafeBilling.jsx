@@ -5,7 +5,7 @@ const items = [
   {
     id: 1,
     name: 'Coffee',
-    image: '/CoffeeCup.jpg',
+    image: '/CoffeeCup.png',
     sizes: [
       { label: 'Small', price: 1.25 },
       { label: 'Large', price: 2.00 },
@@ -14,20 +14,20 @@ const items = [
   {
     id: 2,
     name: 'Tea',
-    image: '/Tea.jpg',
+    image: '/Tea.png',
     sizes: [
       { label: 'Small', price: 1.25 },
       { label: 'Large', price: 1.25 },
     ],
   },
 
-  { id: 3, name: 'Muffin', price: 1.25, image:'/Muffin.jpg' },
-  { id: 4, name: 'Cookie', price: 1.25, image:'/Cookie.jpg' },
-  { id: 4, name: 'Blue Tart', price: 1.75, image:'/Muffin.jpg' },
+  { id: 3, name: 'Muffin', price: 1.25, image:'/Muffin.png' },
+  { id: 4, name: 'Cookie', price: 1.25, image:'/Cookie.png' },
+  { id: 4, name: 'Blue Tart', price: 1.75, image:'/BlueBerry.png' },
   {
     id: 5,
     name: 'Pie',
-    image:'/PumpkinPie.jpg',
+    image:'/PumpkinPie.png',
     sizes: [
       { label: 'Apple', price: 1.25 },
       { label: 'Lemon', price: 2.00 },
@@ -70,7 +70,7 @@ export default function CafeBilling() {
 
   const orderedItems = Object.values(order);
   const subtotal = orderedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const tax = subtotal * 0.1;
+  const tax = subtotal * 0.13;
   const total = subtotal + tax;
 
   const handleCheckout = () => {
@@ -93,7 +93,7 @@ export default function CafeBilling() {
 
   return (
     <div className="container">
-      <h1 className="title">Cafe Menu</h1>
+      <h1 className="title">Café Vita</h1>
       <div className="menu-grid">
       {items.map(item => (
   <div key={item.id}>
@@ -159,7 +159,7 @@ export default function CafeBilling() {
 
       <div className="totals">
         <p>Subtotal: ${subtotal.toFixed(2)}</p>
-        <p>Tax (10%): ${tax.toFixed(2)}</p>
+        <p>Tax (13%): ${tax.toFixed(2)}</p>
         <p className="total">Total: ${total.toFixed(2)}</p>
       </div>
 

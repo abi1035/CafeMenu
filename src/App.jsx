@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from 'react-router-dom';
+import './index.css';
 import CafeBilling from './CafeBilling';
 import SummaryPage from './CheckoutPage';
 import SalesReport from './SalesReport';
@@ -6,10 +7,10 @@ import SalesReport from './SalesReport';
 export default function App() {
   return (
     <div>
-      <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-        <Link to="/" style={{ marginRight: '1rem' }}>Order</Link>
-        <Link to="/summary" style={{ marginRight: '1rem' }} >Summary</Link>
-        <Link to="/SalesReport">Sales Report</Link>
+      <nav className='nav-bar'>
+        <Link to="/" className="nav-link">Order</Link>
+        <Link to="/summary" className="nav-link" >Summary</Link>
+        <Link to="/SalesReport" className="nav-link">Sales Report</Link>
       </nav>
 
       <Routes>

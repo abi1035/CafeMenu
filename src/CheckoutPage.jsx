@@ -34,7 +34,7 @@ export default function SummaryPage() {
     localStorage.removeItem('allCafeOrders');
     alert('All saved orders have been cleared.');
   }}
-  className="clear-storage-button"
+  className="checkout-button"
 >
   Clear Saved Orders
 </button>
