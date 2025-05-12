@@ -84,7 +84,7 @@ export default function CafeBilling() {
   
     const prevOrders = JSON.parse(localStorage.getItem('allCafeOrders')) || [];
     localStorage.setItem('allCafeOrders', JSON.stringify([...prevOrders, newOrder]));
-      alert('Item has been checkedout')
+      alert('Item has been added to the check out')
   
     clearOrder(); // clear the form
     // alert('Order saved!');
@@ -132,7 +132,7 @@ export default function CafeBilling() {
         onClick={() => addItem(item)}
         className="menu-button"
       >
-        <img src={item.image} alt={item.name} className="menu-image" />
+        <img src={item.image} alt={item.name} style={{ height: '138px', objectFit: 'contain' }} className="menu-image" />
         {item.name} - ${item.price.toFixed(2)}
       </button>
     )}
