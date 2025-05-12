@@ -7,8 +7,8 @@ const items = [
     name: 'Coffee',
     image: '/CoffeeCup.png',
     sizes: [
-      { label: 'Small', price: 1.25 },
-      { label: 'Large', price: 2.00 },
+      { label: 'Small', price: 1.1062 },
+      { label: 'Large', price: 1.7699 },
     ],
   },
   {
@@ -16,21 +16,21 @@ const items = [
     name: 'Tea',
     image: '/Tea.png',
     sizes: [
-      { label: 'Small', price: 1.25 },
-      { label: 'Large', price: 1.25 },
+      { label: 'Small', price: 1.1062 },
+      { label: 'Large', price: 1.1062 },
     ],
   },
 
-  { id: 3, name: 'Muffin', price: 1.25, image:'/Muffin.png' },
-  { id: 4, name: 'Cookie', price: 1.25, image:'/Cookie.png' },
-  { id: 4, name: 'Blue Tart', price: 1.75, image:'/BlueBerry.png' },
+  { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png' },
+  { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png' },
+  { id: 4, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png' },
   {
     id: 5,
     name: 'Pie',
     image:'/PumpkinPie.png',
     sizes: [
-      { label: 'Apple', price: 1.25 },
-      { label: 'Lemon', price: 2.00 },
+      { label: 'Apple', price: 1.7699 },
+      { label: 'Lemon', price: 1.7699 },
     ],
   }
 ];

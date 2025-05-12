@@ -6,7 +6,7 @@ const itemImages = {
   'Tea': '/Tea.png',
   'Muffin': '/Muffin.png',
   'Cookie': '/Cookie.png',
-  'Blue Tart': '/BlueBerry.png',
+  'Blue Tart': '/Butter-Tarts.png',
   'Pie': '/PumpkinPie.png'
 };
 
