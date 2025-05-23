@@ -6,7 +6,7 @@ const itemImages = {
   'Tea': '/Tea.png',
   'Muffin': '/Muffin.png',
   'Cookie': '/Cookie.png',
-  'Blue Tart': '/Butter-Tarts.png',
+  'Butter Tart': '/Butter-Tarts.png',
   'Pie': '/PumpkinPie.png'
 };
 
@@ -42,7 +42,8 @@ export default function SalesReport() {
     setItemData(sortedItems);
   }, []);
 
-  const totalRevenue = itemData.reduce((sum, item) => sum + item.revenue, 0);
+  
+  const totalRevenue = itemData.reduce((sum, item) => sum + item.revenue+item.revenue*0.13, 0);
 
   return (
     <div className="container">
