@@ -7,7 +7,11 @@ const itemImages = {
   'Muffin': '/Muffin.png',
   'Cookie': '/Cookie.png',
   'Butter Tart': '/Butter-Tarts.png',
-  'Pie': '/PumpkinPie.png'
+  'Pie': '/PumpkinPie.png',
+  'Noodles Pack': '/Mr.Noodles.png',
+  'Noodle Bowl': '/Koi_Noodle.png',
+  'Plain Bagel': '/Bagel.png',
+  'Bagel Cream Cheese': '/bagelcreamcheese.png',
 };
 
 export default function SalesReport() {

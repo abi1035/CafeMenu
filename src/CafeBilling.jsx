@@ -32,7 +32,31 @@ const items = [
       { label: 'Apple', price: 1.7699 },
       { label: 'Lemon', price: 1.7699 },
     ],
-  }
+  },
+{
+    id: 6,
+    name: 'Noodles Pack',
+    image:'/Mr.Noodles.png',
+    price:1.1062
+  },
+  {
+    id: 7,
+    name: 'Noodle Bowl',
+    image:'/Koi_Noodle.png',
+    price:2.2123
+  },
+  {
+    id: 8,
+    name: 'Plain Bagel',
+    image:'/Bagel.png',
+    price:1.327
+  },
+  {
+    id: 9,
+    name: 'Bagel Cream Cheese',
+    image:'/bagelcreamcheese.png',
+    price:1.991
+  },
 ];
 
 export default function CafeBilling() {
