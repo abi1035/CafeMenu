@@ -12,6 +12,8 @@ const itemImages = {
   'Noodle Bowl': '/Koi_Noodle.png',
   'Plain Bagel': '/Bagel.png',
   'Bagel Cream Cheese': '/bagelcreamcheese.png',
+  'Chai Tea':'/chaiTea.png',
+  'Samosa':'/Samosa.png'
 };
 
 export default function SalesReport() {

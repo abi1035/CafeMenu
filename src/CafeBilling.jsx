@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './CafeBilling.css';
 
+// 1.7699 =2.00
+// 1.327 = 1.50
+
 const items = [
   {
     id: 1,
@@ -49,7 +52,7 @@ const items = [
     id: 8,
     name: 'Plain Bagel',
     image:'/Bagel.png',
-    price:1.327
+    price:1.327 //1.50
   },
   {
     id: 9,
@@ -57,6 +60,21 @@ const items = [
     image:'/bagelcreamcheese.png',
     price:1.991
   },
+   {
+    id: 10,
+    name: 'Chai Tea',
+    image: '/chaiTea.png',
+    sizes: [
+      { label: 'Small', price: 1.327 },
+      { label: 'Large', price: 1.7699 },
+    ],
+  },
+  //   {
+  //   id: 11,
+  //   name: 'Samosa',
+  //   image:'/Samosa.png',
+  //   price:1.991
+  // },
 ];
 
 export default function CafeBilling() {
