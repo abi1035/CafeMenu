@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import './CafeBilling.css';
 
-// 1.7699 =2.00
-// 1.327 = 1.50
-
 const items = [
   {
     id: 1,
     name: 'Coffee',
     image: '/CoffeeCup.png',
     sizes: [
-      { label: 'Small', price: 1.1062 },
-      { label: 'Large', price: 1.7699 },
+      { label: 'Small', price: 1.1062, totalPrice:1.25 },
+      { label: 'Large', price: 1.7699, totalPrice:2.00 },
     ],
   },
   {
@@ -19,62 +16,58 @@ const items = [
     name: 'Tea',
     image: '/Tea.png',
     sizes: [
-      { label: 'Small', price: 1.1062 },
-      { label: 'Large', price: 1.1062 },
+      { label: 'Small', price: 1.1062, totalPrice:1.25 },
+      { label: 'Large', price: 1.1062, totalPrice:1.25 },
     ],
   },
 
-  { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png' },
-  { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png' },
-  { id: 4, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png' },
+  { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png', totalPrice:1.5 },
+  { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png', totalPrice:1.25 },
+  { id: 4, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png', totalPrice:1.75 },
   {
     id: 5,
     name: 'Pie',
     image:'/PumpkinPie.png',
     sizes: [
-      { label: 'Apple', price: 1.7699 },
-      { label: 'Lemon', price: 1.7699 },
+      { label: 'Apple', price: 1.7699, totalPrice:2.00 },
+      { label: 'Lemon', price: 1.7699, totalPrice:2.00 },
     ],
   },
 {
     id: 6,
     name: 'Noodles Pack',
     image:'/Mr.Noodles.png',
-    price:1.1062
+    price:1.1062,
+    totalPrice:1.25
   },
   {
     id: 7,
     name: 'Noodle Bowl',
     image:'/Koi_Noodle.png',
-    price:2.2123
+    price:2.2123,
+    totalPrice:2.50
   },
   {
     id: 8,
     name: 'Plain Bagel',
     image:'/Bagel.png',
-    price:1.327 //1.50
+    price:1.327, 
+    totalPrice:1.5
   },
   {
     id: 9,
     name: 'Bagel Cream Cheese',
     image:'/bagelcreamcheese.png',
-    price:1.991
+    price:1.991,
+    totalPrice:2.25
   },
-   {
+  {
     id: 10,
-    name: 'Chai Tea',
-    image: '/chaiTea.png',
-    sizes: [
-      { label: 'Small', price: 1.327 },
-      { label: 'Large', price: 1.7699 },
-    ],
+    name: 'BBQ Meal',
+    image:'/BBQMeal.png',
+    price:4.42477,
+    totalPrice:5.00
   },
-  //   {
-  //   id: 11,
-  //   name: 'Samosa',
-  //   image:'/Samosa.png',
-  //   price:1.991
-  // },
 ];
 
 export default function CafeBilling() {
@@ -114,6 +107,7 @@ export default function CafeBilling() {
   const subtotal = orderedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const tax = subtotal * 0.13;
   const total = subtotal + tax;
+  
 
   const handleCheckout = () => {
     const newOrder = {
@@ -122,7 +116,10 @@ export default function CafeBilling() {
       tax: tax.toFixed(2),
       total: total.toFixed(2),
       timestamp: new Date().toLocaleString(),
+      
     };
+
+   
   
     const prevOrders = JSON.parse(localStorage.getItem('allCafeOrders')) || [];
     localStorage.setItem('allCafeOrders', JSON.stringify([...prevOrders, newOrder]));
@@ -163,7 +160,7 @@ export default function CafeBilling() {
                 }}
                 className="size-button"
               >
-                {size.label} - ${size.price.toFixed(2)}
+                {size.label} - ${size.totalPrice.toFixed(2)}
               </button>
             ))}
           </div>
@@ -175,7 +172,7 @@ export default function CafeBilling() {
         className="menu-button"
       >
         <img src={item.image} alt={item.name} style={{ height: '138px', objectFit: 'contain' }} className="menu-image" />
-        {item.name} - ${item.price.toFixed(2)}
+        {item.name} - ${item.totalPrice.toFixed(2)}
       </button>
     )}
   </div>
