@@ -13,6 +13,8 @@ const itemImages = {
   'Plain Bagel': '/Bagel.png',
   'Bagel Cream Cheese': '/bagelcreamcheese.png',
   'BBQ Meal': '/BBQMeal.png',
+  'Chai Tea': '/chaiTea.png',
+  'Ice Cream [Drumsticks]': '/iceCream.png',
 };
 
 export default function SalesReport() {

@@ -63,10 +63,26 @@ const items = [
   },
   {
     id: 10,
+    name: 'Chai Tea',
+    image: '/chaiTea.png',
+    sizes: [
+      { label: 'Small', price: 1.3274, totalPrice:1.50 },
+      { label: 'Large', price: 1.7699, totalPrice:2.00 },
+    ],
+  },
+  {
+    id: 11,
     name: 'BBQ Meal',
     image:'/BBQMeal.png',
     price:4.42477,
     totalPrice:5.00
+  },
+  {
+    id: 12,
+    name: 'Ice Cream [Drumsticks]',
+    image:'/iceCream.png',
+    price:1.9911,
+    totalPrice:2.25
   },
 ];
 
