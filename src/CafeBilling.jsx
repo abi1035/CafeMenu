@@ -24,15 +24,6 @@ const items = [
   { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png', totalPrice:1.5 },
   { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png', totalPrice:1.25 },
   { id: 4, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png', totalPrice:1.75 },
-  {
-    id: 5,
-    name: 'Pie',
-    image:'/PumpkinPie.png',
-    sizes: [
-      { label: 'Apple', price: 1.7699, totalPrice:2.00 },
-      { label: 'Lemon', price: 1.7699, totalPrice:2.00 },
-    ],
-  },
 {
     id: 6,
     name: 'Noodles Pack',
@@ -84,6 +75,42 @@ const items = [
     price:1.9911,
     totalPrice:2.25
   },
+  {
+    id: 13,
+    name: 'Samosas',
+    image:'/Samosa.png',
+    price:1.7699,
+    totalPrice:2.00
+  },
+  {
+    id: 14,
+    name: 'Tossed Salad',
+    image:'/TossedSalad.png',
+    price:1.9911,
+    totalPrice:2.25
+  },
+  {
+    id: 16,
+    name: 'Egg Salad Sandwich',
+    image:'/EggSalad.png',
+    price:1.7699,
+    totalPrice:2.00
+  },
+  {
+    id: 17,
+    name: 'Turkey Sandwich',
+    image:'/Turkey.png',
+    price:2.6548,
+    totalPrice:3.00
+  },
+   {
+    id: 17,
+    name: 'Beef Sandwich',
+    image:'/BeefSW.png',
+    price:2.6548,
+    totalPrice:3.00
+  },
+ 
 ];
 
 export default function CafeBilling() {

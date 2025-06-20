@@ -1,0 +1,75 @@
+.float-wrapper {
+  font-family: sans-serif;
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  border: 2px solid #ccc;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.float-title {
+  text-align: center;
+  color: #C8102F;
+  font-size: 1.5rem;
+  margin-bottom: .25rem;
+}
+
+.float-subtitle {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.float-row {
+  margin: 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.float-line-input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #333;
+  font-size: 1rem;
+  padding: 4px;
+}
+
+.float-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.float-table th,
+.float-table td {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 6px;
+}
+
+.float-cell-input {
+  width: 100%;
+  padding: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.float-total-label {
+  text-align: right;
+  font-weight: bold;
+  padding: 6px;
+}
+
+.float-total-cell {
+  width: 100%;
+  padding: 4px;
+  font-weight: bold;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  text-align: center;
+}

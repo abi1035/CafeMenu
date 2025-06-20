@@ -15,6 +15,11 @@ const itemImages = {
   'BBQ Meal': '/BBQMeal.png',
   'Chai Tea': '/chaiTea.png',
   'Ice Cream [Drumsticks]': '/iceCream.png',
+  'Tossed Salad': '/TossedSalad.png',
+  'Egg Salad Sandwich':'EggSalad.png',
+  'Turkey Sandwich': '/Turkey.png',
+  'Beef Sandwich': '/BeefSW.png',
+  'Samosas': '/Samosa.png',
 };
 
 export default function SalesReport() {
