@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import './CafeBilling.css';
 
-
 const items = [
   {
     id: 1,
     name: 'Coffee',
     image: '/CoffeeCup.png',
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     sizes: [
       { label: 'Small', price: 1.1062, totalPrice:1.25 },
       { label: 'Large', price: 1.7699, totalPrice:2.00 },
@@ -17,22 +15,20 @@ const items = [
     id: 2,
     name: 'Tea',
     image: '/Tea.png',
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     sizes: [
       { label: 'Small', price: 1.1062, totalPrice:1.25 },
       { label: 'Large', price: 1.1062, totalPrice:1.25 },
     ],
   },
 
-  { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.5 },
-  { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.25 },
-  { id: 4, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.75 },
+  { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png', totalPrice:1.5 },
+  { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png', totalPrice:1.25 },
+  { id: 4, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png', totalPrice:1.75 },
 {
     id: 6,
     name: 'Noodles Pack',
     image:'/Mr.Noodles.png',
     price:1.1062,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:1.25
   },
   {
@@ -40,7 +36,6 @@ const items = [
     name: 'Noodle Bowl',
     image:'/Koi_Noodle.png',
     price:2.2123,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:2.50
   },
   {
@@ -48,7 +43,6 @@ const items = [
     name: 'Plain Bagel',
     image:'/Bagel.png',
     price:1.327, 
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:1.5
   },
   {
@@ -56,14 +50,12 @@ const items = [
     name: 'Bagel Cream Cheese',
     image:'/bagelcreamcheese.png',
     price:1.991,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:2.25
   },
   {
     id: 10,
     name: 'Chai Tea',
     image: '/chaiTea.png',
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     sizes: [
       { label: 'Small', price: 1.3274, totalPrice:1.50 },
       { label: 'Large', price: 1.7699, totalPrice:2.00 },
@@ -74,7 +66,6 @@ const items = [
     name: 'BBQ Meal',
     image:'/BBQMeal.png',
     price:4.42477,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:5.00
   },
   {
@@ -82,7 +73,6 @@ const items = [
     name: 'Ice Cream [Drumsticks]',
     image:'/iceCream.png',
     price:1.9911,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:2.25
   },
   {
@@ -90,7 +80,6 @@ const items = [
     name: 'Samosas',
     image:'/Samosa.png',
     price:1.7699,
-    branches: ['BurtonManor'],
     totalPrice:2.00
   },
   {
@@ -98,7 +87,6 @@ const items = [
     name: 'Tossed Salad',
     image:'/TossedSalad.png',
     price:1.9911,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:2.25
   },
   {
@@ -106,7 +94,6 @@ const items = [
     name: 'Egg Salad Sandwich',
     image:'/EggSalad.png',
     price:1.7699,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:2.00
   },
   {
@@ -114,15 +101,13 @@ const items = [
     name: 'Turkey Sandwich',
     image:'/Turkey.png',
     price:2.6548,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:3.00
   },
    {
-    id: 18,
+    id: 17,
     name: 'Beef Sandwich',
     image:'/BeefSW.png',
     price:2.6548,
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:3.00
   },
  
@@ -131,7 +116,6 @@ const items = [
 export default function CafeBilling() {
   const [order, setOrder] = useState({});
   const [activeItemId, setActiveItemId] = useState(null);
-  const [selectedBranch, setSelectedBranch] = useState('HenleyPlace');
 
   const addItem = (item, sizeOption = null) => {
     const itemKey = sizeOption ? `${item.name} (${sizeOption.label})` : item.name;
@@ -175,7 +159,6 @@ export default function CafeBilling() {
       tax: tax.toFixed(2),
       total: total.toFixed(2),
       timestamp: new Date().toLocaleString(),
-        branch: selectedBranch
       
     };
 
@@ -194,28 +177,8 @@ export default function CafeBilling() {
   return (
     <div className="container">
       <h1 className="title">Café Vita</h1>
-
-    <div className="branch-selector">
-      <label>Select Branch: </label>
-      <select value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)} className="branch-dropdown">
-        <option value="HenleyPlace">Henley Place</option>
-        <option value="HenleyHouse">Henley House</option>
-        <option value="BurtonManor">Burton Manor</option>
-      </select>
-    </div>
-
       <div className="menu-grid">
-      {items.filter(item => {
-    // Show only items for selected branch
-    if (selectedBranch === 'HenleyPlace') {
-      return !item.branches || item.branches.includes('HenleyPlace');
-    } else if (selectedBranch === 'HenleyHouse') {
-      return item.branches && item.branches.includes('HenleyHouse');
-    } else if (selectedBranch === 'BurtonManor') {
-      return item.branches && item.branches.includes('BurtonManor');
-    }
-    return false;
-  }).map(item => (
+      {items.map(item => (
   <div key={item.id}>
     {item.sizes ? (
       <>
