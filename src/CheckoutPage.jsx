@@ -8,36 +8,70 @@ export default function SummaryPage() {
     setOrders(stored);
   }, []);
 
-  const totalCollected = orders.reduce((sum, order) => sum + parseFloat(order.total), 0);
+  // Group orders by date (yyyy-mm-dd format)
+  const groupedByDate = {};
+
+  orders.forEach(order => {
+    const dateStr = new Date(order.timestamp).toLocaleDateString();
+    if (!groupedByDate[dateStr]) {
+      groupedByDate[dateStr] = [];
+    }
+    groupedByDate[dateStr].push(order);
+  });
+
+  // Get item summary for a group of orders
+  const summarizeItems = (ordersForDate) => {
+    const itemMap = {};
+
+    ordersForDate.forEach(order => {
+      order.items.forEach(item => {
+        const key = item.name;
+        if (!itemMap[key]) {
+          itemMap[key] = { name: key, quantity: 0, total: 0 };
+        }
+        itemMap[key].quantity += item.quantity;
+        itemMap[key].total += item.quantity * item.price;
+      });
+    });
+
+    return Object.values(itemMap).sort((a, b) => b.quantity - a.quantity);
+  };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Daily Summary</h1>
-      <p><strong>Total Collected:</strong> ${totalCollected.toFixed(2)}</p>
-      <h2>Orders:</h2>
-      <ul>
-        {orders.map((order, index) => (
-          <li key={index} style={{ marginBottom: '1rem' }}>
-            <p><strong>Time:</strong> {order.timestamp}</p>
-            <ul>
-              {order.items.map((item, idx) => (
-                <li key={idx}>{item.name} x{item.quantity} = ${(item.price * item.quantity).toFixed(2)}</li>
-              ))}
-            </ul>
-            <p>Total: ${order.total}</p>
-            <hr />
-          </li>
-        ))}
-      </ul>
-      {/* <button
-  onClick={() => {
-    localStorage.removeItem('allCafeOrders');
-    alert('All saved orders have been cleared.');
-  }}
-  className="checkout-button"
->
-  Clear Saved Orders
-</button> */}
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <h1>Sales Summary by Date</h1>
+
+      {Object.entries(groupedByDate).map(([date, dateOrders]) => {
+        const dailyTotal = dateOrders.reduce((sum, order) => sum + parseFloat(order.total), 0);
+        const itemSummary = summarizeItems(dateOrders);
+
+        return (
+          <div key={date} style={{ marginBottom: '3rem' }}>
+            <h2>{date}</h2>
+            <p><strong>Total Collected:</strong> ${dailyTotal.toFixed(2)}</p>
+
+            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem', tableLayout: 'fixed' }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '50%', textAlign: 'left', padding: '0.5rem', borderBottom: '2px solid #ccc' }}>Item</th>
+                  <th style={{ width: '25%', textAlign: 'left', padding: '0.5rem', borderBottom: '2px solid #ccc' }}>Quantity</th>
+                  <th style={{ width: '25%', textAlign: 'left', padding: '0.5rem', borderBottom: '2px solid #ccc' }}>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {itemSummary.map((item, idx) => (
+                  <tr key={idx}>
+                    <td style={{ padding: '0.5rem', textAlign: 'left' }}>{item.name}</td>
+                    <td style={{ padding: '0.5rem', textAlign: 'left' }}>{item.quantity}</td>
+                    <td style={{ padding: '0.5rem', textAlign: 'left' }}>${item.total.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </div>
+        );
+      })}
     </div>
   );
 }
