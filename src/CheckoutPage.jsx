@@ -70,7 +70,7 @@ orders.forEach(order => {
                   <tr key={idx}>
                     <td style={{ padding: '0.5rem', textAlign: 'left' }}>{item.name}</td>
                     <td style={{ padding: '0.5rem', textAlign: 'left' }}>{item.quantity}</td>
-                    <td style={{ padding: '0.5rem', textAlign: 'left' }}>${item.total.toFixed(2)}</td>
+                    <td style={{ padding: '0.5rem', textAlign: 'left' }}>${(item.total*1.13).toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
