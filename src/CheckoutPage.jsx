@@ -11,15 +11,20 @@ export default function SummaryPage() {
   // Group orders by date (yyyy-mm-dd format)
   const groupedByDate = {};
 
-  orders.forEach(order => {
+orders.forEach(order => {
   const parsed = new Date(order.timestamp);
-  const dateStr = !isNaN(parsed) ? parsed.toLocaleDateString() : 'Invalid Date';
   
+  // Safely convert to 'MM/DD/YYYY' or your desired format
+  const dateStr = !isNaN(parsed.getTime())
+    ? parsed.toLocaleDateString(undefined, { year: 'numeric', month: 'numeric', day: 'numeric' })
+    : 'Invalid Date';
+
   if (!groupedByDate[dateStr]) {
     groupedByDate[dateStr] = [];
   }
   groupedByDate[dateStr].push(order);
 });
+
 
   // Get item summary for a group of orders
   const summarizeItems = (ordersForDate) => {

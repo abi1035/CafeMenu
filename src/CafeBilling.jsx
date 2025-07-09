@@ -178,7 +178,8 @@ export default function CafeBilling() {
       subtotal: subtotal.toFixed(2),
       tax: tax.toFixed(2),
       total: total.toFixed(2),
-      timestamp: new Date().toLocaleString(),
+      // timestamp: new Date().toLocaleString(),
+      timestamp: new Date().toISOString(),
         branch: selectedBranch
       
     };
