@@ -12,12 +12,14 @@ export default function SummaryPage() {
   const groupedByDate = {};
 
   orders.forEach(order => {
-    const dateStr = new Date(order.timestamp).toLocaleDateString();
-    if (!groupedByDate[dateStr]) {
-      groupedByDate[dateStr] = [];
-    }
-    groupedByDate[dateStr].push(order);
-  });
+  const parsed = new Date(order.timestamp);
+  const dateStr = !isNaN(parsed) ? parsed.toLocaleDateString() : 'Invalid Date';
+  
+  if (!groupedByDate[dateStr]) {
+    groupedByDate[dateStr] = [];
+  }
+  groupedByDate[dateStr].push(order);
+});
 
   // Get item summary for a group of orders
   const summarizeItems = (ordersForDate) => {
