@@ -20,6 +20,12 @@ const itemImages = {
   'Turkey Sandwich': '/Turkey.png',
   'Beef Sandwich': '/BeefSW.png',
   'Samosas': '/Samosa.png',
+  'Couscous Salad': '/Couscous.png',
+  'Chicken Ceasar Salad': '/ChickenCeasarSalad.png',
+  'Southwest Cobb Salad': '/SouthwestCobbSalad.png',
+  'Fruit Cup': '/FruitCup.png',
+  'Veggie Cup': '/VeggieCup.png',
+  'Yogurt and Fruit Cup': '/YougurtFruitCup.png',
 };
 
 export default function SalesReport() {
