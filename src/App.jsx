@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import CafeBilling from './CafeBilling';
-import SummaryPage from './CheckoutPage';
+import SummaryPage from './SummaryPage';
 import SalesReport from './SalesReport';
 import CafeFloatTable from './CafeFloat';
 import EndOfSales from './EndOfDaySales';
