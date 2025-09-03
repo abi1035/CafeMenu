@@ -138,7 +138,7 @@ const items = [
     name: 'Couscous Salad',
     image:'/Couscous.png',
     price:4.8672,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor'],
     totalPrice:5.50
   },
    {
@@ -146,7 +146,7 @@ const items = [
     name: 'Chicken Ceasar Salad',
     image:'/ChickenCeasarSalad.png',
     price:7.7433,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor'],
     totalPrice:8.75
   },
    {
@@ -154,7 +154,7 @@ const items = [
     name: 'Southwest Cobb Salad',
     image:'/SouthwestCobbSalad.png',
     price:7.3008,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor'],
     totalPrice:8.25
   },
    {
@@ -162,7 +162,7 @@ const items = [
     name: 'Fruit Cup',
     image:'/FruitCup.png',
     price:3.3185,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor'],
     totalPrice:3.75
   },
    {
@@ -170,7 +170,7 @@ const items = [
     name: 'Veggie Cup',
     image:'/VeggieCup.png',
     price:3.3185,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor'],
     totalPrice:3.75
   },
    {
@@ -178,7 +178,7 @@ const items = [
     name: 'Yogurt and Fruit Cup',
     image:'/YougurtFruitCup.png',
     price:3.3185,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor'],
     totalPrice:3.75
   },
  
