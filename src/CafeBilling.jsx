@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './CafeBilling.css';
 
 
+
+
 const items = [
   {
     id: 1,
@@ -12,6 +14,7 @@ const items = [
       { label: 'Small', price: 1.1062, totalPrice:1.25 },
       { label: 'Large', price: 1.7699, totalPrice:2.00 },
     ],
+    
   },
 
   {
@@ -24,12 +27,12 @@ const items = [
       { label: 'Large', price: 1.1062, totalPrice:1.25 },
     ],
   },
-  { id: 19, name: 'Water', price: 1.7699, image:'/Water.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:2.00 },
+  // { id: 19, name: 'Water', price: 1.7699, image:'/Water.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:2.00, hideable: true },
 
   { id: 3, name: 'Muffin', price: 1.3274, image:'/Muffin.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.5 },
   { id: 4, name: 'Cookie', price: 1.1062, image:'/Cookie.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.25 },
-  { id: 21, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.75 },
-  { id: 20, name: 'Pop', price: 1.7699, image:'/Pop.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:2.00 },
+  { id: 26, name: 'Butter Tart', price: 1.5486, image:'/Butter-Tarts.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:1.75 },
+  // { id: 20, name: 'Pop', price: 1.7699, image:'/Pop.png', branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'], totalPrice:2.00,hideable: true },
 
 {
     id: 6,
@@ -63,16 +66,17 @@ const items = [
     branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
     totalPrice:2.25
   },
-  {
-    id: 10,
-    name: 'Chai Tea',
-    image: '/chaiTea.png',
-    branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
-    sizes: [
-      { label: 'Small', price: 1.3274, totalPrice:1.50 },
-      { label: 'Large', price: 1.7699, totalPrice:2.00 },
-    ],
-  },
+  // {
+  //   id: 10,
+  //   name: 'Chai Tea',
+  //   image: '/chaiTea.png',
+  //   branches: ['HenleyPlace', 'HenleyHouse','BurtonManor'],
+  //   sizes: [
+  //     { label: 'Small', price: 1.3274, totalPrice:1.50 },
+  //     { label: 'Large', price: 1.7699, totalPrice:2.00 },
+  //   ],
+  //   // hideable: !!items.hideable, 
+  // },
   {
     id: 11,
     name: 'BBQ Meal',
@@ -130,7 +134,7 @@ const items = [
     totalPrice:3.00
   },
    {
-    id: 19,
+    id: 23,
     name: 'Couscous Salad',
     image:'/Couscous.png',
     price:4.8672,
@@ -138,7 +142,7 @@ const items = [
     totalPrice:5.50
   },
    {
-    id: 20,
+    id: 25,
     name: 'Chicken Ceasar Salad',
     image:'/ChickenCeasarSalad.png',
     price:7.7433,
@@ -162,7 +166,7 @@ const items = [
     totalPrice:3.75
   },
    {
-    id: 23,
+    id: 27,
     name: 'Veggie Cup',
     image:'/VeggieCup.png',
     price:3.3185,
@@ -180,21 +184,42 @@ const items = [
  
 ];
 
+
+
+
 export default function CafeBilling() {
   const [order, setOrder] = useState({});
   const [activeItemId, setActiveItemId] = useState(null);
   const [selectedBranch, setSelectedBranch] = useState('HenleyPlace');
 
+  const HIDEABLE_BASENAMES = new Set([
+  'Water', // add any others you want hideable
+  'Pop',
+]);
+
+  const pickUnitPrice = (item, sizeOption) => {
+  // Prefer totalPrice if present (that’s what you show in UI)
+  if (sizeOption) return sizeOption.totalPrice ?? sizeOption.price;
+  return item.totalPrice ?? item.price;
+};
+
   const addItem = (item, sizeOption = null) => {
     const itemKey = sizeOption ? `${item.name} (${sizeOption.label})` : item.name;
-    const price = sizeOption ? sizeOption.price : item.price;
+    const unitPrice = pickUnitPrice(item, sizeOption);
 
-    setOrder((prevOrder) => {
-      const existing = prevOrder[itemKey] || { name: itemKey, price, quantity: 0 };
+
+      setOrder((prev) => {
+    const existing = prev[itemKey] || {
+      name: itemKey,
+      price: unitPrice,
+      quantity: 0,
+      hideable: !!item.hideable,          // ⬅️ save the flag with the line item
+      baseName: item.name.split(' (')[0], // optional, helps with grouping later
+    };
       return {
-        ...prevOrder,
-        [itemKey]: { ...existing, quantity: existing.quantity + 1 },
-      };
+      ...prev,
+      [itemKey]: { ...existing, quantity: existing.quantity + 1, price: unitPrice },
+    };;
     });
 
    
