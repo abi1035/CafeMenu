@@ -9,6 +9,17 @@ const HIDEABLE_BASENAMES = new Set([
 
 const baseName = (name) => name.split(' (')[0];
 
+// helpers
+const toMoney = (n) => Math.round(Number(n || 0) * 100) / 100;
+
+// get a unit pre-tax price for a line item, with fallbacks for legacy saves
+const getItemBase = (it) => {
+  if (it.priceExTax != null) return Number(it.priceExTax);          // new schema
+  if (it.price != null) return Number(it.price);                    // legacy pre-tax or (old) tax-included
+  if (it.priceWithTax != null) return toMoney(Number(it.priceWithTax) / 1.13);
+  return 0;
+};
+
 export default function SummaryPage() {
   const [orders, setOrders] = useState([]);
   const [hiddenItems, setHiddenItems] = useState(new Set());
@@ -54,11 +65,11 @@ export default function SummaryPage() {
     (groupedByDate[dateStr] ||= []).push(order);
   });
 
-  // Summarize items for one day, respecting hidden set
+  // Summarize items for one day, respecting hidden set (pre-tax subtotals)
   const summarizeItems = (ordersForDate) => {
     const map = {};
     ordersForDate.forEach((order) => {
-      order.items.forEach((it) => {
+      (order.items || []).forEach((it) => {
         const bn = baseName(it.name);
 
         // skip if hidden
@@ -72,15 +83,43 @@ export default function SummaryPage() {
           map[it.name] = {
             name: it.name,
             quantity: 0,
-            subtotal: 0,
+            subtotalEx: 0, // pre-tax
             hideable: isHideable,
           };
         }
-        map[it.name].quantity += it.quantity;
-        map[it.name].subtotal += it.quantity * it.price;
+        const unitBase = getItemBase(it);
+        map[it.name].quantity += Number(it.quantity) || 0;
+        map[it.name].subtotalEx += unitBase * (Number(it.quantity) || 0);
       });
     });
-    return Object.values(map).sort((a, b) => b.quantity - a.quantity);
+    return Object.values(map)
+      .map((row) => ({ ...row, subtotalEx: toMoney(row.subtotalEx) }))
+      .sort((a, b) => b.quantity - a.quantity);
+  };
+
+  // Prefer saved daily totals when present (keeps rounding consistent). Otherwise recompute.
+  const computeDailyTotals = (dateOrders) => {
+    const allHaveSaved = dateOrders.every(
+      (o) => o.subtotal != null && o.tax != null && o.total != null
+    );
+    if (allHaveSaved) {
+      const subtotal = dateOrders.reduce((s, o) => s + parseFloat(o.subtotal), 0);
+      const tax = dateOrders.reduce((s, o) => s + parseFloat(o.tax), 0);
+      const total = dateOrders.reduce((s, o) => s + parseFloat(o.total), 0);
+      return { subtotal: toMoney(subtotal), tax: toMoney(tax), total: toMoney(total) };
+    }
+
+    // Recompute from items (pre-tax → tax → total)
+    const subtotal = dateOrders.reduce((sum, o) => {
+      const items = o.items || [];
+      return (
+        sum +
+        items.reduce((s, it) => s + getItemBase(it) * (Number(it.quantity) || 0), 0)
+      );
+    }, 0);
+    const tax = subtotal * 0.13;
+    const total = subtotal + tax;
+    return { subtotal: toMoney(subtotal), tax: toMoney(tax), total: toMoney(total) };
   };
 
   return (
@@ -104,15 +143,15 @@ export default function SummaryPage() {
 
       {Object.entries(groupedByDate).map(([date, dateOrders]) => {
         const itemSummary = summarizeItems(dateOrders);
-        const dailySubtotal = itemSummary.reduce((s, i) => s + i.subtotal, 0);
-        const dailyTax = dailySubtotal * 0.13;
-        const dailyTotal = dailySubtotal + dailyTax;
+        const { subtotal, tax, total } = computeDailyTotals(dateOrders);
 
         return (
           <div key={date} style={{ marginBottom: '3rem' }}>
             <h2>{date}</h2>
             <p>
-              <strong>Total Collected:</strong> ${dailyTotal.toFixed(2)}
+              <strong>Subtotal:</strong> ${subtotal.toFixed(2)} &nbsp;|&nbsp;
+              <strong>Tax (13%):</strong> ${tax.toFixed(2)} &nbsp;|&nbsp;
+              <strong>Total Collected:</strong> ${total.toFixed(2)}
             </p>
 
             <table
@@ -149,7 +188,7 @@ export default function SummaryPage() {
                       borderBottom: '2px solid #ccc',
                     }}
                   >
-                    Subtotal
+                    Subtotal (pre-tax)
                   </th>
                   <th
                     style={{
@@ -170,7 +209,7 @@ export default function SummaryPage() {
                       {it.quantity}
                     </td>
                     <td style={{ padding: '0.5rem', textAlign: 'right' }}>
-                      ${it.subtotal.toFixed(2)}
+                      ${it.subtotalEx.toFixed(2)}
                     </td>
                     <td style={{ padding: '0.5rem', textAlign: 'right' }}>
                       {it.hideable && (
@@ -199,7 +238,7 @@ export default function SummaryPage() {
                     <strong>Tax (13%)</strong>
                   </td>
                   <td style={{ textAlign: 'right', padding: '0.5rem' }}>
-                    <strong>${dailyTax.toFixed(2)}</strong>
+                    <strong>${tax.toFixed(2)}</strong>
                   </td>
                   <td></td>
                 </tr>
@@ -209,7 +248,7 @@ export default function SummaryPage() {
                     <strong>Total</strong>
                   </td>
                   <td style={{ textAlign: 'right', padding: '0.5rem' }}>
-                    <strong>${dailyTotal.toFixed(2)}</strong>
+                    <strong>${total.toFixed(2)}</strong>
                   </td>
                   <td></td>
                 </tr>

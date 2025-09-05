@@ -204,26 +204,57 @@ export default function CafeBilling() {
 };
 
   const addItem = (item, sizeOption = null) => {
-    const itemKey = sizeOption ? `${item.name} (${sizeOption.label})` : item.name;
-    const unitPrice = pickUnitPrice(item, sizeOption);
+  const itemKey = sizeOption ? `${item.name} (${sizeOption.label})` : item.name;
 
+  const unitBase  = getUnitBase(item, sizeOption);   // pre-tax
+  const unitTotal = getUnitTotal(item, sizeOption);  // with tax
 
-      setOrder((prev) => {
+  setOrder((prev) => {
     const existing = prev[itemKey] || {
       name: itemKey,
-      price: unitPrice,
+      priceExTax: unitBase,
+      priceWithTax: unitTotal,
       quantity: 0,
-      hideable: !!item.hideable,          // ⬅️ save the flag with the line item
-      baseName: item.name.split(' (')[0], // optional, helps with grouping later
+      hideable: !!item.hideable,
+      baseName: item.name.split(' (')[0],
     };
-      return {
+    return {
       ...prev,
-      [itemKey]: { ...existing, quantity: existing.quantity + 1, price: unitPrice },
-    };;
-    });
+      [itemKey]: {
+        ...existing,
+        quantity: existing.quantity + 1,
+        // keep unit prices consistent for this key
+        priceExTax: unitBase,
+        priceWithTax: unitTotal,
+      },
+    };
+  });
+};
 
-   
-  };
+  const toMoney = (n) => Math.round(n * 100) / 100;
+
+const getUnitBase = (item, sizeOption) => {
+  if (sizeOption) {
+    // prefer explicit base price; as a fallback, derive from total if needed
+    if (sizeOption.price != null) return sizeOption.price;
+    if (sizeOption.totalPrice != null) return toMoney(sizeOption.totalPrice / 1.13);
+    return 0;
+  }
+  if (item.price != null) return item.price;
+  if (item.totalPrice != null) return toMoney(item.totalPrice / 1.13);
+  return 0;
+};
+
+const getUnitTotal = (item, sizeOption) => {
+  if (sizeOption) {
+    if (sizeOption.totalPrice != null) return sizeOption.totalPrice;
+    if (sizeOption.price != null) return toMoney(sizeOption.price * 1.13);
+    return 0;
+  }
+  if (item.totalPrice != null) return item.totalPrice;
+  if (item.price != null) return toMoney(item.price * 1.13);
+  return 0;
+};
 
   const removeItem = (itemKey) => {
     setOrder((prevOrder) => {
@@ -239,10 +270,15 @@ export default function CafeBilling() {
 
   const clearOrder = () => setOrder({});
 
-  const orderedItems = Object.values(order);
-  const subtotal = orderedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const tax = subtotal * 0.13;
-  const total = subtotal + tax;
+const orderedItems = Object.values(order);
+
+// compute from pre-tax values
+const subtotal = orderedItems.reduce(
+  (sum, item) => sum + item.priceExTax * item.quantity,
+  0
+);
+const tax = subtotal * 0.13;
+const total = subtotal + tax;
   
 
   const handleCheckout = () => {
@@ -344,13 +380,14 @@ export default function CafeBilling() {
         <ul className="order-list">
           {Object.entries(order).map(([key, item]) => (
             <li key={key} className="order-item">
-              <span>
-                {item.name} x{item.quantity} = ${(item.price * item.quantity).toFixed(2)}
-              </span>
-              <button onClick={() => removeItem(key)} className="remove-button">
-                Remove
-              </button>
-            </li>
+            <span>
+              {item.name} x{item.quantity} = ${ (item.priceExTax * item.quantity).toFixed(2) }
+              {/* optionally show with-tax per line:
+                {' '}(<em>${(item.priceWithTax * item.quantity).toFixed(2)} with tax</em>)
+              */}
+            </span>
+            <button onClick={() => removeItem(key)} className="remove-button">Remove</button>
+          </li>
           ))}
         </ul>
       )}
