@@ -5,6 +5,8 @@ import SummaryPage from './SummaryPage';
 import SalesReport from './SalesReport';
 import CafeFloatTable from './CafeFloat';
 import EndOfSales from './EndOfDaySales';
+import AdminSummary from './AdminSummary';
+import RequireAuth from './components/RequireAuth';
 
 export default function App() {
   return (
@@ -14,6 +16,7 @@ export default function App() {
         <Link to="/summary" className="nav-link" >Summary</Link>
         <Link to="/SalesReport" className="nav-link">Sales Report</Link>
         <Link to="/cafeFloat" className="nav-link">Cafe Float</Link>
+        <Link to="/admin-summary" className="nav-link">Admin Report</Link>
         {/* <Link to="/endOfDaySales" className="nav-link">End of Day Sales</Link> */}
       </nav>
 
@@ -22,6 +25,15 @@ export default function App() {
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/SalesReport" element={<SalesReport />} />
         <Route path="/cafeFloat" element={<CafeFloatTable />} />
+        <Route
+          path="/admin-summary"
+          element={
+            <RequireAuth>
+              <AdminSummary />
+            </RequireAuth>
+          }
+        />
+
         {/* <Route path="/endOfDaySales" element={<EndOfSales />} /> */}
       </Routes>
     </div>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from './Firebase'
 import './CafeBilling.css';
 
 
@@ -197,6 +199,43 @@ export default function CafeBilling() {
   'Pop',
 ]);
 
+const isPlainObject = (v) => Object.prototype.toString.call(v) === '[object Object]';
+
+const sanitizeForFirestore = (value) => {
+  if (value === undefined) return undefined;           // caller will drop it
+  if (value === null) return null;
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) return null;
+    return value;
+  }
+  if (typeof value === 'string' || typeof value === 'boolean') return value;
+  if (Array.isArray(value)) {
+    // drop undefined entries
+    return value
+      .map((v) => sanitizeForFirestore(v))
+      .filter((v) => v !== undefined);
+  }
+  if (isPlainObject(value)) {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) {
+      const sv = sanitizeForFirestore(v);
+      if (sv !== undefined) out[k] = sv; // omit undefined fields
+    }
+    return out;
+  }
+  // functions, symbols, etc.
+  return null;
+};
+
+
+const toLocalYMD = (d) => {
+  const yr = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${yr}-${m}-${day}`;
+};
+
+
   const pickUnitPrice = (item, sizeOption) => {
   // Prefer totalPrice if present (that’s what you show in UI)
   if (sizeOption) return sizeOption.totalPrice ?? sizeOption.price;
@@ -280,28 +319,67 @@ const subtotal = orderedItems.reduce(
 const tax = subtotal * 0.13;
 const total = subtotal + tax;
   
+const [saving, setSaving] = useState(false);
 
-  const handleCheckout = () => {
-    const newOrder = {
-      items: orderedItems,
+const handleCheckout = async () => {
+  if (saving) return;
+  setSaving(true);
+
+  try {
+    const now = new Date();
+
+    const itemsForSave = orderedItems.map((it) =>
+      sanitizeForFirestore({
+        name: it.name,
+        quantity: Number(it.quantity) || 0,
+        priceExTax: Math.round((it.priceExTax ?? 0) * 100) / 100,
+        priceWithTax: Math.round((it.priceWithTax ?? 0) * 100) / 100,
+        hideable: !!it.hideable,
+        baseName: it.baseName ?? it.name.split(" (")[0],
+      })
+    );
+
+    // Firestore payload (can include serverTimestamp)
+    const orderForFirestore = sanitizeForFirestore({
+      items: itemsForSave,
       subtotal: subtotal.toFixed(2),
       tax: tax.toFixed(2),
       total: total.toFixed(2),
-      // timestamp: new Date().toLocaleString(),
-      timestamp: new Date().toISOString(),
-        branch: selectedBranch
-      
+      timestamp: now.toISOString(),
+      ymd: toLocalYMD(now),
+      branch: selectedBranch,
+      createdAt: serverTimestamp(),
+    });
+
+    // Local payload (NO serverTimestamp; all JSON-serializable)
+    const orderForLocal = {
+      ...orderForFirestore,
+      createdAt: now.toISOString(),
     };
 
-   
-  
-    const prevOrders = JSON.parse(localStorage.getItem('allCafeOrders')) || [];
-    localStorage.setItem('allCafeOrders', JSON.stringify([...prevOrders, newOrder]));
-      alert('Item has been added to the check out')
-  
-    clearOrder(); // clear the form
-    // alert('Order saved!');
-  };
+    // 1) Save to Firestore
+    try {
+      await addDoc(collection(db, "orders"), orderForFirestore);
+    } catch (err) {
+      console.error("Firestore write failed:", err);
+      // continue to save locally so clerks still see it
+    }
+
+    // 2) Save to the SAME key the Summary page reads
+    try {
+      const prev = JSON.parse(localStorage.getItem("allCafeOrders") || "[]");
+      prev.push(orderForLocal);
+      localStorage.setItem("allCafeOrders", JSON.stringify(prev));
+    } catch (e2) {
+      console.error("LocalStorage write failed:", e2);
+    }
+
+    alert("Order saved!");
+    clearOrder();
+  } finally {
+    setSaving(false);
+  }
+};
 
   
 
