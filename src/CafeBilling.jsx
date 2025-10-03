@@ -183,6 +183,23 @@ const items = [
     branches: ['HenleyPlace','BurtonManor'],
     totalPrice:3.75
   },
+   {
+    id: 25,
+    name: 'Chili',
+    image:'/Soup.png',
+    price:2.6548,
+    branches: ['HenleyPlace'],
+    totalPrice:3.00
+  },
+ 
+   {
+    id: 26,
+    name: 'Soup',
+    image:'/chili.png',
+    price:4.425,
+    branches: ['HenleyPlace'],
+    totalPrice:5.00
+  },
  
 ];
 
