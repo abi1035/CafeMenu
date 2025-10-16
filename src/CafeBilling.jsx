@@ -188,7 +188,7 @@ const items = [
     name: 'Chili',
     image:'/chili.png',
     price:4.425,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor','HenleyHouse'],
     totalPrice:5.00
   },
  
@@ -197,7 +197,7 @@ const items = [
     name: 'Soup',
     image:'/Soup.png',
     price:2.6548,
-    branches: ['HenleyPlace'],
+    branches: ['HenleyPlace','BurtonManor','HenleyHouse'],
     totalPrice:3.00
   },
  
