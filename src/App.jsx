@@ -14,8 +14,8 @@ export default function App() {
       <nav className='nav-bar'>
         <Link to="/" className="nav-link">Order</Link>
         <Link to="/summary" className="nav-link" >Summary</Link>
-        <Link to="/SalesReport" className="nav-link">Sales Report</Link>
-        <Link to="/cafeFloat" className="nav-link">Cafe Float</Link>
+        {/* <Link to="/SalesReport" className="nav-link">Sales Report</Link> */}
+        {/* <Link to="/cafeFloat" className="nav-link">Cafe Float</Link> */}
         <Link to="/admin-summary" className="nav-link">Admin Report</Link>
         {/* <Link to="/endOfDaySales" className="nav-link">End of Day Sales</Link> */}
       </nav>
@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/" element={<CafeBilling />} />
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/SalesReport" element={<SalesReport />} />
-        <Route path="/cafeFloat" element={<CafeFloatTable />} />
+        {/* <Route path="/cafeFloat" element={<CafeFloatTable />} /> */}
         <Route
           path="/admin-summary"
           element={
